@@ -1,7 +1,22 @@
-2021.11.16
+# OSP PROJECT - SFML GAME
 
-1. Upload Default Setting of sfml in vs community
-  You can use SFML without extra setting.
-  Just set your bit rate to x64.
 
-2. Upload Proposal
+## Members of Team 2
+ - Woosung Jeong
+ - Hyemin Yang
+ - Serin Kim
+ - Yoogyum Kim
+ - Donghyuk Choi
+
+
+## Content
+ - Header	(hpp)
+
+ - Animation	(hpp, cpp)
+ - Entity 	(hpp, cpp)
+ - Audio	(hpp, cpp)
+
+ - Player	(hpp, cpp)
+ - Villain	(hpp, cpp)
+ - Bullet	(hpp, cpp)
+
