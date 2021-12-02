@@ -2,7 +2,7 @@
 
 
 ## Members of Team 2
- - Woosung Jeong
+ - Woosung Chung
  - Hyemin Yang
  - Serin Kim
  - Yoogyum Kim
