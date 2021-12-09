@@ -1,22 +1,22 @@
 #include "FingerPrincess.hpp"
 
 //Constructor
-Villain::Villain()
+FingerPrincess::FingerPrincess()
 {
-	name = "FINGP";
+	name = "FING_P";
 
 	villainHP = 5;
 	villainSpeed = 10;
 }
 
 //Destructor
-Villain::~Villain()
+FingerPrincess::~FingerPrincess()
 {
 	
 }
 
 
-void Villain::attack()
+void FingerPrincess::attack()
 {
 	
 	// Villain's attack
@@ -24,7 +24,7 @@ void Villain::attack()
 }
 
 
-void Villian::update()
+void FingerPrincess::update()
 {
 	//  REVISED - 20211209
 	//  Automating the villain's attack on the player
