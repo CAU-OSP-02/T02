@@ -2,7 +2,7 @@
 
 
 ## Members of Team 2
- - Woosung Jeong
+ - Woosung Chung
  - Hyemin Yang
  - Serin Kim
  - Yoogyum Kim
@@ -18,5 +18,7 @@
 
  - Player	(hpp, cpp)
  - Villain	(hpp, cpp)
+ 	- FingerPrincess	(hpp, cpp)
+	- Senior		(hpp, cpp)
  - Bullet	(hpp, cpp)
 
