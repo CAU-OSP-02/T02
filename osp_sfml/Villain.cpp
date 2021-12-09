@@ -38,8 +38,18 @@ void Villain::loseHP(const int damage)
 }
 
 
+void Villain::attack()
+{
+	
+	// Villain's attack
+
+}
+
+
 void Villian::update()
 {
-	//  :NEED TO BE ADDED:
+	//  REVISED - 20211209
 	//  Automating the villain's attack on the player
+	
+	this->attack();
 }

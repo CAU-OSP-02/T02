@@ -27,6 +27,8 @@ public:
 	void setHP(const int HP);
 	void loseHP(const int damage);
 
+	void attack(); // Villain's attack skill
+
 	void update();
 	
 };
