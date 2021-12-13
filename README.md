@@ -23,5 +23,10 @@
  	- Trianer		(hpp, cpp)
 	- Professor		(hpp, cpp)
 	- BusMember		(hpp, cpp)
- - Bullet	(hpp, cpp)
 
+ - Bullet	(hpp, cpp)
+ - Item
+ 	- Pencil	(hpp, cpp)
+	- Glasses	(hpp, cpp)
+	- Coffee	(hpp, cpp)
+	- Escooter	(hpp, cpp)
