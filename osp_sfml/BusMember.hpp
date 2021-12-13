@@ -1,7 +1,7 @@
 #pragma once
 #include "Villain.hpp"
 
-class Senior : public Villain
+class BusMember : public Villain
 {
 public:
 	float villainSpeed;	// Villain's speed
@@ -10,15 +10,16 @@ public:
         int villainHP;		// Villain's HP
 
 	//Constructor
-	Senior();
+	BusMember();
 	
 	//Destructor
-	~Senior();
+	~BusMember();
 
 
 	void update();
 	
 };
+
 
 
 

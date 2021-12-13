@@ -84,16 +84,6 @@ void Settings::runGame()
 	std::list<Entity*> entities; // GROUP of entity class's object
 
 
-	// Create Asteroid object -- fixed number of Asteroid = 20
-	for (int i = 0; i < 20; i++)
-	{
-		Asteroid* a = new Asteroid();
-		a->settings(sAsteroid, rand() % screenW, rand() % screenH, rand() % 360, 25);
-		entities.push_back(a);
-	}
-
-
-
 	// Create Player A & B
 	Player* pA = new Player();
 	pA->settings(sPlayerA, screenW / 2 + 300, screenH / 2, 0, 20);
