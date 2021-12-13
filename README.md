@@ -20,5 +20,8 @@
  - Villain	(hpp, cpp)
  	- FingerPrincess	(hpp, cpp)
 	- Senior		(hpp, cpp)
+ 	- Trianer		(hpp, cpp)
+	- Professor		(hpp, cpp)
+	- BusMember		(hpp, cpp)
  - Bullet	(hpp, cpp)
 
