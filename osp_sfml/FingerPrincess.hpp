@@ -10,10 +10,10 @@ public:
         int villainHP;		// Villain's HP
 
 	//Constructor
-	Villain();
+	FingerPrincess();
 	
 	//Destructor
-	~Villain();
+	~FingerPrincess();
 
 
 	void update();
