@@ -5,7 +5,7 @@ Trainer::Trainer()
 {
 	name = "TRAINER";
 
-	villainHP = 5;
+	villainHP = 7;
 	villainSpeed = 10;
 }
 

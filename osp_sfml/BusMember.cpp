@@ -6,7 +6,7 @@ BusMember::BusMember()
 	name = "BUSMEMBER";
 
 	villainHP = 5;
-	villainSpeed = 10;
+	villainSpeed = 14;
 }
 
 //Destructor
