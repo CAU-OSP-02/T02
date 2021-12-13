@@ -3,7 +3,7 @@
 
 ## Members of Team 2
  - Woosung Chung
- - Hyemin Yang
+ - [Hyemin Yang](https://github.com/hyemworks)
  - Serin Kim
  - Yoogyum Kim
  - Donghyuk Choi
