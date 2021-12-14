@@ -7,6 +7,9 @@ private:
 	
 	sf::Sprite shape;
 	sf::Texture texture_1;
+	sf::Texture texture_2;
+	sf::Texture texture_3;
+	sf::Texture texture_4;
 	sf::Vector2f direction;
 
 	float speed;
@@ -16,9 +19,10 @@ private:
 
 public:
 	//type에 따라서 세 가지로 나뉜다.
-	//1. 핑거 프린세스
-	//2. 헬스 트레이너
-	//3. 팀플 버스
+	// 1. 핑거 프린세스
+	// 2. 헬스 트레이너
+	// 3. 팀플 버스
+	// 4. 꼰대 선배
 
 	Villain(float posX, float posY, int type);
 	~Villain();

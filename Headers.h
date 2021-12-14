@@ -18,7 +18,6 @@
 using namespace sf;
 using namespace std;
 
-// 창 크기를 설정 (동혁이가 만드는 대로 이후에 수정 예정임)
-
-const int width = 1920;
-const int height = 1280;
+// 창 크기 설정 
+const int width = 1440;
+const int height = 1080;
