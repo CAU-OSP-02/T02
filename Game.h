@@ -1,5 +1,6 @@
 #pragma once
 #include "Villain.h"
+#include "Item.h"
 class Game
 {
 private:
@@ -11,8 +12,13 @@ private:
 	std::vector<Villain*>villains;
 	float spawnTimerVillain;
 	float spawnTimerVillainMax;
-	//world
 
+	//Item
+	std::vector<Item*>items;
+	float spawnTimerItem;
+	float spawnTimerItemMax;
+
+	//World
 	sf::Texture worldBackgroundTexture;
 	sf::Sprite worldBackground;
 
@@ -21,6 +27,7 @@ private:
 	void initTextures();
 	void initWorld();
 	void initVillains();
+	void initItems();
 
 public:
 	Game();
@@ -29,8 +36,9 @@ public:
 	void run();
 
 	void updatePollEvent();
-	void updateVillains();
 	void updateWorld();
+	void updateVillains();
+	void updateItems();
 	void update();
 
 	//render functions

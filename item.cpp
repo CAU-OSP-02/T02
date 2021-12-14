@@ -9,7 +9,7 @@ Item::Item(float posX, float posY, int type)
 
 		this->shape.setTexture(texture_1);
 		this->shape.setPosition(posX, posY);
-
+		this->ratio = 3.f;
 	}
 
 	else if (type == 2)
@@ -19,6 +19,7 @@ Item::Item(float posX, float posY, int type)
 
 		this->shape.setTexture(texture_2);
 		this->shape.setPosition(posX, posY);
+		this->attackSpeed = 3.f;
 	}
 
 	else if (type == 3)
@@ -28,18 +29,17 @@ Item::Item(float posX, float posY, int type)
 
 		this->shape.setTexture(texture_3);
 		this->shape.setPosition(posX, posY);
-
-		this->hpMax += 3;
+		this->hp = 3;
 	}
 
 	else if (type == 4)
 	{
+		// 4. ½ºÄíÅÍ
 		this->texture_4.loadFromFile("Images/escooter.png");
 
 		this->shape.setTexture(texture_4);
 		this->shape.setPosition(posX, posY);
-
-		this->speed += 3;
+		this->speed = 3.f;
 	}
 }
 
@@ -52,19 +52,29 @@ const sf::FloatRect Item::getBounds() const
 	return this->shape.getGlobalBounds();
 }
 
+const int& Item::getType() const
+{
+	return this->type;
+}
+
+const float& Item::getAttackSpeed() const
+{
+	return this->attackSpeed;
+}
+
+const float& Item::getSpeed() const
+{
+	return this->speed;
+}
+
+const float& Item::getRatio() const
+{
+	return this->ratio;
+}
+
 const int& Item::getHp() const
 {
 	return this->hp;
-}
-
-const int& Item::getHpMax() const
-{
-	return this->hpMax;
-}
-
-void Item::setHp(const int hp)
-{
-	this->hp = hp;
 }
 
 void Item::render(sf::RenderTarget* target)

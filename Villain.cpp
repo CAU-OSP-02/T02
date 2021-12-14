@@ -6,6 +6,7 @@ Villain::Villain(float posX, float posY, int type)
 	{
 		// 1. 핑거 프린세스
 		this->texture_1.loadFromFile("Images/bullet.png");
+		this->shape.scale(0.2f, 0.2f);
 
 		this->shape.setTexture(texture_1);
 		this->shape.setPosition(posX, posY);
@@ -37,20 +38,8 @@ Villain::Villain(float posX, float posY, int type)
 		this->hpMax = 5;
 		this->speed = 15;
 	}
-	
-	else if (type == 4)
-	{
-		// 4. 꼰대 선배
-		this->texture_4.loadFromFile("Images/senior.jpg");
 
-		this->shape.setTexture(texture_4);
-		this->shape.setPosition(posX, posY);
-
-		this->hpMax = 5;
-		this->speed = 10;
-	}
-
-	this->hp = hpMax;
+	this->hp = this->hpMax;
 }
 
 Villain::~Villain()
@@ -87,9 +76,14 @@ void Villain::loseHp(const int damage)
 	}
 }
 
-void Villain::attack()
+const int& Villain::getDamage() const
 {
-	// 차차 구성할 예정
+	return this->damage;
+}
+
+const float& Villain::getAttackSpeed() const
+{
+	return this->attackTimeMax;
 }
 
 void Villain::move()
@@ -100,7 +94,6 @@ void Villain::move()
 void Villain::update()
 {
 	this->move();
-	this->attack();
 }
 
 void Villain::render(sf::RenderTarget* target)

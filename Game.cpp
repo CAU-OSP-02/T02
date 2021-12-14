@@ -11,8 +11,6 @@ void Game::initWindow()
 
 void Game::initTextures()
 {
-	this->textures["VILLAINS"] = new sf::Texture();
-	this->textures["VILLAINS"]->loadFromFile("Images/bullet.png");
 }
 
 void Game::initWorld()
@@ -28,11 +26,18 @@ void Game::initVillains()
 	this->spawnTimerVillain = this->spawnTimerVillainMax;
 }
 
+void Game::initItems()
+{
+	this->spawnTimerItemMax = 200.f;
+	this->spawnTimerItem = this->spawnTimerItemMax;
+}
+
 Game::Game()
 {
 	this->initWindow();
 	this->initWorld();
 	this->initVillains();
+	this->initItems();
 }
 
 Game::~Game()
@@ -101,15 +106,44 @@ void Game::updateVillains()
 	}
 }
 
+void Game::updateItems()
+{
+	this->spawnTimerItem += 0.5f;
+	if (this->spawnTimerItem >= spawnTimerItemMax)
+	{
+		this->items.push_back(new Item(
+			250.f,
+			100.f,
+			1));
+		this->spawnTimerItem = 0.f;
+	}
+
+	unsigned counter = 0;
+	for (auto* item : this->items)
+	{
+		/*
+		else if (enemy->getBounds().intersects(this->player->getBounds()))
+		{
+			this->player->looseHp(this->enemies.at(counter)->getDamage());
+			delete this->enemies.at(counter);
+			this->enemies.erase(this->enemies.begin() + counter);
+		}
+		++counter;
+		*/
+	}
+}
+
 void Game::updateWorld()
 {
 }
 
 void Game::update()
 {
+	this->updateWorld();
+
 	this->updateVillains();
 
-	this->updateWorld();
+	this->updateItems();
 }
 
 void Game::renderWorld()
@@ -126,6 +160,11 @@ void Game::render()
 	for (auto* villain : this->villains)
 	{
 		villain->render(this->window);
+	}
+
+	for (auto* item : this->items)
+	{
+		item->render(this->window);
 	}
 
 	this->window->display();
