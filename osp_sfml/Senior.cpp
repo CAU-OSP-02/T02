@@ -6,7 +6,8 @@ Senior::Senior()
 	name = "SENIOR";
 
 	villainHP = 5;
-	villainSpeed = 6;
+	villainSpeed = 10;
+	attackSpeed = 10;
 }
 
 //Destructor

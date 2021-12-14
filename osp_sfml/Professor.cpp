@@ -5,8 +5,9 @@ Professor::Professor()
 {
 	name = "PROFESSOR";
 
-	villainHP = 5;
+	villainHP = 13;
 	villainSpeed = 10;
+	attackSpeed = 12;
 }
 
 //Destructor

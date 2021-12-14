@@ -6,6 +6,7 @@ class Villain : public Entity
 public:
 	float villainSpeed;	// Villain's speed
 	float maxSpeed;		// Villain's max speed
+	float attackSpeed;	// Villain's attack speed
 
 	sf::RectangleShape villianHpBar;
 	sf::RectangleShape villianHpBarBack;

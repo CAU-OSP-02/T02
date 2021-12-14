@@ -7,6 +7,7 @@ Trainer::Trainer()
 
 	villainHP = 7;
 	villainSpeed = 10;
+	attackSpeed = 10;
 }
 
 //Destructor

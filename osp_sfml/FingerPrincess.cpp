@@ -7,6 +7,7 @@ FingerPrincess::FingerPrincess()
 
 	villainHP = 5;
 	villainSpeed = 10;
+	attackSpeed = 10;
 }
 
 //Destructor

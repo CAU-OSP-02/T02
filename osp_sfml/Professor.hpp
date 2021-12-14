@@ -6,6 +6,7 @@ class Professor : public Villain
 public:
 	float villainSpeed;	// Villain's speed
 	float maxSpeed;		// Villain's max speed
+	float attackSpeed;	// Villain's attackspeed
 
         int villainHP;		// Villain's HP
 
