@@ -5,7 +5,11 @@ Trainer::Trainer()
 {
 	name = "TRAINER";
 
+<<<<<<< HEAD
 	villainHP = 5;
+=======
+	villainHP = 7;
+>>>>>>> f402315bf2cd73dfd8c6f8b950415c317b90dbfb
 	villainSpeed = 10;
 }
 

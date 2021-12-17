@@ -1,0 +1,141 @@
+#include "Villain.h"
+
+Villain::Villain(float posX, float posY, int type)
+{
+	if (type == 1)
+	{
+		// 1. 핑거 프린세스
+		this->texture_1.loadFromFile("Images/bullet.png");
+		this->shape.scale(0.2f, 0.2f);
+
+		this->shape.setTexture(texture_1);
+		this->shape.setPosition(posX, posY);
+
+		this->hpMax = 5;
+		this->speed = 10;
+		this->damage = 2;
+		this->attackCoolMax = 6.f;
+	}
+
+	else if (type == 2)
+	{
+		// 2. 헬스 트레이너
+		this->texture_2.loadFromFile("Images/health_trainer.jpg");
+
+		this->shape.setTexture(texture_2);
+		this->shape.setPosition(posX, posY);
+
+		this->hpMax = 7;
+		this->speed = 10;
+		this->damage = 2;
+		this->attackCoolMax = 6.f;
+	}
+
+	else if (type == 3)
+	{
+		// 3. 팀플 버스
+		this->texture_3.loadFromFile("Images/bus_member.jpg");
+
+		this->shape.setTexture(texture_3);
+		this->shape.setPosition(posX, posY);
+
+		this->hpMax = 5;
+		this->speed = 15;
+		this->speedDown = 3;
+	}
+
+	else if (type == 4)
+	{
+		// 4. 꼰대 선배
+		this->texture_4.loadFromFile("Images/bus_member.jpg");
+
+		this->shape.setTexture(texture_4);
+		this->shape.setPosition(posX, posY);
+
+		this->hpMax = 5;
+		this->speed = 10;
+		this->damage = 2;
+		this->attackCoolMax = 6.f;
+	}
+
+	else if (type == 5)
+	{
+		// 5. 교수님
+		this->texture_5.loadFromFile("Images/bus_member.jpg");
+
+		this->shape.setTexture(texture_5);
+		this->shape.setPosition(posX, posY);
+
+		this->hpMax = 13;
+		this->speed = 10;
+		this->damage = 2;
+		this->attackCoolMax = 5.f;
+	}
+
+	this->attackCool = this->attackCoolMax;
+	this->hp = this->hpMax;
+}
+
+Villain::~Villain()
+{
+}
+
+
+const sf::FloatRect Villain::getBounds() const
+{
+	return this->shape.getGlobalBounds();
+}
+
+const int& Villain::getHp() const
+{
+	return this->hp;
+}
+
+const int& Villain::getHpMax() const
+{
+	return this->hpMax;
+}
+
+void Villain::setHp(const int hp)
+{
+	this->hp = hp;
+}
+
+void Villain::loseHp(const int damage)
+{
+	this->hp -= damage;
+	if (this->hp < 0)
+	{
+		this->hp = 0;
+	}
+}
+
+const int& Villain::getDamage() const
+{
+	return this->damage;
+}
+
+const float& Villain::getAttackSpeed() const
+{
+	return this->attackCool;
+}
+
+const float& Villain::getSpeedDown() const
+{
+	return this->speedDown;
+}
+
+void Villain::move()
+{
+	this->shape.move(0, 10);
+}
+
+void Villain::update()
+{
+	this->move();
+}
+
+void Villain::render(sf::RenderTarget* target)
+{
+	target->draw(this->shape);
+}

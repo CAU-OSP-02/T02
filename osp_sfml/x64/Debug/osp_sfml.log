@@ -1,2 +1,6 @@
 ﻿  main.cpp
+<<<<<<< HEAD
   osp_sfml.vcxproj -> C:\_data\git\project-sfml\T02\osp_sfml\x64\Debug\osp_sfml.exe
+=======
+  osp_sfml.vcxproj -> C:\Users\woosu\OneDrive\바탕 화면\OSP_SFML\osp_sfml\x64\Debug\osp_sfml.exe
+>>>>>>> f402315bf2cd73dfd8c6f8b950415c317b90dbfb
