@@ -15,7 +15,7 @@ private:
 	Player* player;
 
 	//Bullets
-	std::vector<Bullet*> bullets;
+	std::vector<Bullet*>bullets;
 
 	//Villain
 	std::vector<Villain*>villains;

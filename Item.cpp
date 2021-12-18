@@ -21,7 +21,7 @@ Item::Item(float posX, float posY, int type)
 		this->shape.setTexture(texture_1);
 		this->shape.setScale(0.2f, 0.2f);
 		this->shape.setPosition(posX, posY);
-		this->attackSpeed = 3.f;
+		this->attackSpeed = 0.f;
 	}
 
 	else if (type == 3)

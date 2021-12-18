@@ -121,7 +121,7 @@ void Game::updateDelete()
 	}
 	for (auto* i : this->items)
 	{
-		//delete i;
+		delete i;
 	}
 
 	for (auto* i : this->villains)
@@ -232,7 +232,7 @@ void Game::updateItems()
 		this->items.push_back(new Item(
 			rand() % 1440,
 			rand() % 1080,
-			rand() % 4 + 1));
+			2));
 
 		this->spawnTimerItem = 0.f;
 	}
@@ -240,6 +240,7 @@ void Game::updateItems()
 	unsigned counter = 0;
 	for (auto* item : this->items)
 	{
+		cout << item << endl;
 		if (item->getBounds().intersects(this->player->getBounds()))
 		{
 			if (this->items.at(counter)->getType() == 1)
@@ -248,9 +249,7 @@ void Game::updateItems()
 			}
 			else if (this->items.at(counter)->getType() == 2)
 			{
-				this->player->setAttackSpeed(
-					this->player->getAttackSpeed() -
-					this->items.at(counter)->getAttackSpeed());
+				//this->player->setAttackSpeed(3.f);
 			}
 			else if (this->items.at(counter)->getType() == 3)
 			{
@@ -289,7 +288,7 @@ void Game::updateInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && this->player->canAttack())
 	{
 		this->bullets.push_back(new Bullet(
-			this->player->getPosition().x + this->player->getBounds().width / 2.f - 30,
+			this->player->getPosition().x + this->player->getBounds().width / 2.f,
 			this->player->getPosition().y + this->player->getBounds().height / 2.f,
 			this->player->getDirection().x,
 			this->player->getDirection().y));
@@ -344,6 +343,7 @@ void Game::updatePlayer()
 void Game::updateBullets()
 {
 	unsigned counter = 0;
+
 	for (auto* bullet : this->bullets)
 	{
 		bullet->update();
@@ -353,6 +353,7 @@ void Game::updateBullets()
 			|| bullet->getBounds().left + bullet->getBounds().width < 0.f
 			|| bullet->getBounds().left > 1440)
 		{
+			cout << bullet << endl;
 			delete this->bullets.at(counter);
 			this->bullets.erase(this->bullets.begin() + counter);
 		}

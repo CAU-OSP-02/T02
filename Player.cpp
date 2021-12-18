@@ -128,6 +128,11 @@ const float Player::getAttackSpeed() const
 void Player::setSpeed(float x) 
 {
 	this->playerSpeed = x;
+
+	if (this->playerSpeed >= 15)
+	{
+		this->playerSpeed = 15;
+	}
 }
 
 const float Player::getSpeed() const 
