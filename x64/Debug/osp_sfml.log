@@ -1,5 +1,8 @@
 ﻿  Game.cpp
-C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\Villain.h(19,11): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\Villain.h(20,14): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\Villain.h(21,15): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\Game.cpp(175,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\Game.cpp(183,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\Game.cpp(190,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\Game.cpp(198,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\Game.cpp(234,11): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\Game.cpp(233,11): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   osp_sfml.vcxproj -> C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\x64\Debug\osp_sfml.exe

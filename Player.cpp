@@ -4,9 +4,10 @@
 Player::Player()
 {
 	//texture
-	this->texture.loadFromFile("Images/spaceship.png");
-	this->shape.setTexture(this->texture);
-	this->shape.scale(0.2f, 0.2f);
+	this->texture_1.loadFromFile("Images/main_character-1.png");
+	this->texture_2.loadFromFile("Images/main_character-2.png");
+	this->shape.setTexture(texture_1);
+	this->shape.setScale(0.5f, 0.5f);
 
 	//abilities
 	this->powerBool = false;
@@ -17,11 +18,11 @@ Player::Player()
 	this->playerSpeed = this->maxSpeed;
 
 	this->playerDamage = 2;
-	this->playerScore = 0;
 
-	this->playerBullet = 30;
 	this->attackCoolMax = 6;
 	this->attackCool = 0;
+
+	this->setDirection(0.f, -1.f);
 }
 
 //Destructor
@@ -44,10 +45,14 @@ const int& Player::getHpMax() const
 	return this->playerHpMax;
 }
 
-
 void Player::setHP(const int hp)
 {
 	this->playerHp = hp;
+
+	if (playerHp > playerHpMax)
+	{
+		this->playerHp = this->playerHpMax;
+	}
 }
 
 void Player::loseHP(const int damage)
@@ -58,6 +63,12 @@ void Player::loseHP(const int damage)
 	{
 		this->playerHp = 0;
 	}
+}
+
+void Player::setDirection(float X, float Y)
+{
+	this->dir.x = X;
+	this->dir.y = Y;
 }
 
 const bool Player::canAttack()
@@ -78,14 +89,20 @@ void Player::updateAttack()
 	}
 }
 
-const int& Player::getScore() const
+void Player::move(float X, float Y)
 {
-	return playerScore;
-}
-
-void Player::move(const float X, const float Y)
-{
-	this->shape.move(this->playerSpeed * X, this->playerSpeed * Y);
+	this->setDirection(X, Y);
+	this->shape.move(this->playerSpeed * dir.x, this->playerSpeed * dir.y);
+	if (this->dir.x <= 0)
+	{
+		this->shape.setTexture(texture_1);
+		this->shape.setScale(0.5f, 0.5f);
+	}
+	else if (this->dir.x > 0)
+	{
+		this->shape.setTexture(texture_2);
+		this->shape.setScale(0.5f, 0.5f);
+	}
 }
 
 const sf::FloatRect Player::getBounds() const
@@ -98,45 +115,39 @@ const sf::Vector2f& Player::getPosition() const
 	return this->shape.getPosition();
 }
 
+void Player::setAttackSpeed(float x)
+{
+	this->attackCoolMax = x;
+}
+
+const float Player::getAttackSpeed() const
+{
+	return this->attackCoolMax;
+}
+
+void Player::setSpeed(float x) 
+{
+	this->playerSpeed = x;
+}
+
+const float Player::getSpeed() const 
+{
+	return playerSpeed;
+}
+
+const sf::Vector2f& Player::getDirection() const
+{
+	return this->dir;
+}
+
 void Player::update()
 {
 	this->updateAttack();
-	//임의로 각주 처리해둠
-	/*
-	if (powerBool) // if the player goes forward, POWER UP!
-	{
-		dX += cos(angle * DEGTORADI) * 0.2;
-		dY += sin(angle * DEGTORADI) * 0.2;
-	}
-	else // else power down...
-	{
-		dX *= 0.99;
-		dY *= 0.99;
-	}
-
-
-	playerSpeed = sqrt(dX * dX + dY * dY);
-	maxSpeed = 15.0f;
-
-
-	if (playerSpeed > maxSpeed)
-	{
-		dX *= maxSpeed / playerSpeed;
-		dY *= maxSpeed / playerSpeed;
-	}
-
-
-	xPos += dX;
-	yPos += dY;
-
-
-	// :NEED TO BE ADDED:
-	// The appropriate screen movement when the player moves.
-	*/
 }
 
 void Player::render(sf::RenderTarget& target)
 {
 	target.draw(this->shape);
 }
+
 

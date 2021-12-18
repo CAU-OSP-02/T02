@@ -6,7 +6,8 @@ class Player //Inheritance
 private:
 
 	sf::Sprite shape;
-	sf::Texture texture;
+	sf::Texture texture_1;
+	sf::Texture texture_2;
 
 	bool powerBool;			// If player goes forward
 		
@@ -17,12 +18,11 @@ private:
 	int playerHpMax;		// Player's MAX HP
 
 	int playerDamage;		// Player's Damage
-	int playerScore;		// Player's SCORE
-
-	int playerBullet;		//number of player's bullets
 
 	float attackCool;		// player's attackCoolDown
 	float attackCoolMax;	// player's attackCool Max
+
+	sf::Vector2f dir;
 
 public:
 	//Constructor
@@ -37,13 +37,17 @@ public:
 	const int& getHpMax() const;
 	void setHP(const int HP);
 	void loseHP(const int damage);
+	void setDirection(float X, float Y);
+	void setAttackSpeed(float x);
+	void setSpeed(float x);
 
-	const int& getScore() const;
+	const float getAttackSpeed() const;
+	const float getSpeed() const;
 	const sf::FloatRect getBounds() const;
 	const sf::Vector2f& getPosition() const;
+	const sf::Vector2f& getDirection() const;
 
-	//TO 혜민 움직이는 거 임의로 구현해 두긴 했지만 바꿔도 전혀 상관 없습니다
-	void move(const float X, const float Y);
+	void move(float X, float Y);
 
 	//만약 attackCool이 attackCoolMax보다 커지면 공격을 하는 방식으로 공격속도 설정
 	//그래서 update 함수에 넣어둠

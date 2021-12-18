@@ -2,12 +2,13 @@
 
 Item::Item(float posX, float posY, int type)
 {
+	this->type = type;
 	if (type == 1)
 	{
 		// 1. 안경
 		this->texture_1.loadFromFile("Images/glasses.png");
-
 		this->shape.setTexture(texture_1);
+		this->shape.setScale(0.2f, 0.2f);
 		this->shape.setPosition(posX, posY);
 		this->ratio = 3.f;
 	}
@@ -15,9 +16,10 @@ Item::Item(float posX, float posY, int type)
 	else if (type == 2)
 	{
 		// 2. 연필
-		this->texture_2.loadFromFile("Images/pencil.png");
+		this->texture_1.loadFromFile("Images/pencil.png");
 
-		this->shape.setTexture(texture_2);
+		this->shape.setTexture(texture_1);
+		this->shape.setScale(0.2f, 0.2f);
 		this->shape.setPosition(posX, posY);
 		this->attackSpeed = 3.f;
 	}
@@ -25,9 +27,10 @@ Item::Item(float posX, float posY, int type)
 	else if (type == 3)
 	{
 		// 3. 커피
-		this->texture_3.loadFromFile("Images/coffee.png");
+		this->texture_1.loadFromFile("Images/coffee.png");
 
-		this->shape.setTexture(texture_3);
+		this->shape.setTexture(texture_1);
+		this->shape.setScale(0.2f, 0.2f);
 		this->shape.setPosition(posX, posY);
 		this->hp = 3;
 	}
@@ -35,9 +38,10 @@ Item::Item(float posX, float posY, int type)
 	else if (type == 4)
 	{
 		// 4. 스쿠터
-		this->texture_4.loadFromFile("Images/escooter.png");
+		this->texture_1.loadFromFile("Images/escooter.png");
 
-		this->shape.setTexture(texture_4);
+		this->shape.setTexture(texture_1);
+		this->shape.setScale(0.2f, 0.2f);
 		this->shape.setPosition(posX, posY);
 		this->speed = 3.f;
 	}

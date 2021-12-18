@@ -6,6 +6,7 @@
 #include <random>
 #include <list>
 #include <vector>
+#include <cmath>
 #include <time.h>
 #include <map>
 

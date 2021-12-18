@@ -7,9 +7,6 @@ private:
 
 	sf::Sprite shape;
 	sf::Texture texture_1;
-	sf::Texture texture_2;
-	sf::Texture texture_3;
-	sf::Texture texture_4;
 	sf::Vector2f direction;
 
 	int type = 0;

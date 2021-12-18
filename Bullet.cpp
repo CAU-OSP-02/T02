@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-Bullet::Bullet(float posX, float posY, float dirX, float dirY, float)
+Bullet::Bullet(float posX, float posY, float dirX, float dirY)
 {
 	this->texture.loadFromFile("Images/bullet.png");
 	this->shape.setTexture(this->texture);
@@ -9,7 +9,7 @@ Bullet::Bullet(float posX, float posY, float dirX, float dirY, float)
 	this->shape.setPosition(posX, posY);
 	this->direction.x = dirX;
 	this->direction.y = dirY;
-	this->movementSpeed = 5.f;
+	this->movementSpeed = 8.f;
 }
 
 Bullet::~Bullet()
@@ -23,7 +23,7 @@ const sf::FloatRect Bullet::getBounds() const
 
 void Bullet::update()
 {
-	this->shape.move(this->movementSpeed * this->direction);
+	this->shape.move(this->movementSpeed * this->direction.x, this->movementSpeed * this->direction.y);
 }
 
 void Bullet::render(sf::RenderTarget* target)

@@ -10,7 +10,7 @@ private:
 	float movementSpeed;
 
 public:
-	Bullet(float posX, float posY, float dirX, float dirY, float);
+	Bullet(float posX, float posY, float dirX, float dirY);
 	~Bullet();
 
 	const sf::FloatRect getBounds() const;
