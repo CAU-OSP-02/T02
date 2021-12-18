@@ -2,3 +2,4 @@ C:\Users\woosu\OneDrive\바탕 화면\OSP_SFML\osp_sfml\x64\Debug\osp_sfml.exe
 C:\Users\woosu\OneDrive\바탕 화면\아카이브 (1)\x64\Debug\osp_sfml.exe
 C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\21115\211125\x64\Debug\osp_sfml.exe
 C:\Users\woosu\OneDrive\바탕 화면\School\Open Source Programming\211224\T02\x64\Debug\osp_sfml.exe
+C:\Users\kyg02\OneDrive\바탕 화면\T02\x64\Debug\osp_sfml.exe

@@ -5,8 +5,8 @@ Villain::Villain(float posX, float posY, int type)
 	if (type == 1)
 	{
 		// 1. 핑거 프린세스
-		this->texture_1.loadFromFile("Images/FingerPrincess_left.png");
-		this->texture_2.loadFromFile("Images/FingerPrincess_right.png");
+		this->texture_1.loadFromFile("Images/characters/FingerPrincess/FingerPrincess_left.png");
+		this->texture_2.loadFromFile("Images/characters/FingerPrincess/FingerPrincess_right.png");
 		this->shape.scale(0.5f, 0.5f);
 
 		this->shape.setTexture(texture_1);

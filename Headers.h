@@ -1,20 +1,22 @@
 #pragma once
 
 #include <iostream>
+#include <stdio.h>
 #include <string>
 #include <cstdlib>
+#include <sstream>
 #include <random>
-#include <list>
 #include <vector>
 #include <cmath>
 #include <time.h>
-#include <map>
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
+
+
 
 using namespace sf;
 using namespace std;

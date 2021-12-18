@@ -40,21 +40,29 @@ private:
 	sf::Text pointText;
 	sf::Text highPointText;
 	sf::Text gameOverText;
+	sf::Text gameRetryText;
+	sf::Text playerHpText;
+	sf::Text playerAttackText;
+	sf::Text playerSpeedText;
 
 	//Systems
 	unsigned points;
 	unsigned highPoints;
 
+	int level = 0;
 	int state = 0;
+	int itemBtn = 0;
 
 	sf::RectangleShape playerHpBar;
 	sf::RectangleShape playerHpBarBack;
 	sf::RectangleShape playerHpBarBot;
+	sf::RectangleShape playerAbility;
+	sf::RectangleShape playerItem;
 
 	//init functions
 	void initWindow();
-	void initTextures();
 	void initGui();
+	void initSystem();
 	void initWorld();
 	void initPlayer();
 	void initBullet();
@@ -79,10 +87,12 @@ public:
 	void updateBullets();
 	void updateVillains();
 	void updateItems();
+	void updateReset();
 	void update();
 
 	//render functions
 	void renderGui();
 	void renderWorld();
+	void renderObjects();
 	void render();
 };

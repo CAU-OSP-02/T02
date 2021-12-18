@@ -38,9 +38,11 @@ public:
 	void setHP(const int HP);
 	void loseHP(const int damage);
 	void setDirection(float X, float Y);
+	void setDamage(int x);
 	void setAttackSpeed(float x);
 	void setSpeed(float x);
 
+	const int getDamage() const;
 	const float getAttackSpeed() const;
 	const float getSpeed() const;
 	const sf::FloatRect getBounds() const;

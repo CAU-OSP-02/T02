@@ -2,7 +2,7 @@
 
 Bullet::Bullet(float posX, float posY, float dirX, float dirY)
 {
-	this->texture.loadFromFile("Images/bullet.png");
+	this->texture.loadFromFile("Images/items/book_left.png");
 	this->shape.setTexture(this->texture);
 	this->shape.scale(0.06f, 0.06f);
 
@@ -24,6 +24,7 @@ const sf::FloatRect Bullet::getBounds() const
 void Bullet::update()
 {
 	this->shape.move(this->movementSpeed * this->direction.x, this->movementSpeed * this->direction.y);
+	this->shape.rotate(20.f);
 }
 
 void Bullet::render(sf::RenderTarget* target)

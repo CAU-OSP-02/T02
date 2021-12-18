@@ -9,58 +9,100 @@ void Game::initWindow()
 	this->window->setVerticalSyncEnabled(false);
 }
 
-void Game::initTextures()
-{
-}
 
 void Game::initGui()
 {
 	this->font.loadFromFile("Fonts/FIGHTT3_.ttf");
 
 	this->titleText.setFont(this->font);
-	this->titleText.setCharacterSize(70);
+	this->titleText.setCharacterSize(50);
 	this->titleText.setFillColor(sf::Color::Black);
-	this->titleText.setPosition(20.f, 20.f);
-	this->titleText.setString("OPEN SOURCE");
+	this->titleText.setPosition(20.f, 0.f);
+	this->titleText.setString("[23 : 58]");
 
 	this->pointText.setFont(this->font);
-	this->pointText.setCharacterSize(50);
+	this->pointText.setCharacterSize(70);
 	this->pointText.setFillColor(sf::Color::Black);
-	this->pointText.setPosition(20.f, 100.f);
+	this->pointText.setPosition(600.f, 30.f);
 
 	this->highPointText.setFont(this->font);
-	this->highPointText.setCharacterSize(50);
+	this->highPointText.setCharacterSize(30);
 	this->highPointText.setFillColor(sf::Color::Black);
-	this->highPointText.setPosition(20.f, 150.f);
+	this->highPointText.setPosition(630.f, 0.f);
 
 	this->gameOverText.setFont(this->font);
-	this->gameOverText.setCharacterSize(300);
+	this->gameOverText.setCharacterSize(150);
 	this->gameOverText.setFillColor(sf::Color::Black);
-	this->gameOverText.setPosition(650.f, 250.f);
+	this->gameOverText.setPosition(750.f, 350.f);
 	this->gameOverText.setString("GAME OVER");
+
+	this->gameRetryText.setFont(this->font);
+	this->gameRetryText.setCharacterSize(50);
+	this->gameRetryText.setFillColor(sf::Color::Red);
+	this->gameRetryText.setPosition(570.f, 530.f);
+	this->gameRetryText.setString("Try Again? (Y / N)");
+
 	this->gameOverText.setPosition(
 		this->window->getSize().x / 2 - this->gameOverText.getGlobalBounds().width / 2.f,
 		this->window->getSize().y / 2 - this->gameOverText.getGlobalBounds().height / 2.f - 100);
+;
+	this->playerHpText.setFont(this->font);
+	this->playerHpText.setCharacterSize(40);
+	this->playerHpText.setFillColor(sf::Color::White);
+	this->playerHpText.setPosition(720 - playerHpText.getGlobalBounds().width / 2 - 40.f, 900.f);
 
+	this->playerAttackText.setFont(this->font);
+	this->playerAttackText.setCharacterSize(30);
+	this->playerAttackText.setFillColor(sf::Color::Blue);
+	this->playerAttackText.setPosition(720 - playerAttackText.getGlobalBounds().width / 2 - 370.f, 890.f);
 
-	this->playerHpBar.setSize(sf::Vector2f(230.f, 30.f));
+	this->playerSpeedText.setFont(this->font);
+	this->playerSpeedText.setCharacterSize(30);
+	this->playerSpeedText.setFillColor(sf::Color::Magenta);
+	this->playerSpeedText.setPosition(720 - playerAttackText.getGlobalBounds().width / 2 - 370.f, 920.f);
+
+	this->playerHpBar.setSize(sf::Vector2f(300.f, 50.f));
 	this->playerHpBar.setFillColor(sf::Color(200, 20, 20, 100));
-	this->playerHpBar.setPosition(sf::Vector2f(20.f, 220.f));
+	this->playerHpBar.setPosition(sf::Vector2f(570.f, 900.f));
 
 	this->playerHpBarBack = this->playerHpBar;
 	this->playerHpBarBack.setFillColor(sf::Color(25, 25, 25, 100));
 
-	this->playerHpBarBot.setSize(sf::Vector2f(240.f, 40.f));
+	this->playerHpBarBot.setSize(sf::Vector2f(320.f, 70.f));
 	this->playerHpBarBot.setFillColor(sf::Color(184, 184, 178, 100));
-	this->playerHpBarBot.setPosition(sf::Vector2f(15.f, 215.f));
+	this->playerHpBarBot.setPosition(sf::Vector2f(560.f, 890.f));
 
+	this->playerAbility.setSize(sf::Vector2f(200.f, 70.f));
+	this->playerAbility.setFillColor(sf::Color(184, 184, 178, 100));
+	this->playerAbility.setPosition(sf::Vector2f(300.f, 890.f));
+
+	this->playerItem.setSize(sf::Vector2f(200.f, 200.f));
+	this->playerItem.setFillColor(sf::Color(184, 184, 178, 100));
+	this->playerItem.setPosition(sf::Vector2f(30.f, 800.f));
+}
+
+void Game::initSystem()
+{
+	FILE *file = NULL;
+		
+	if (fopen_s(&file, "score.dat", "rt") == 0)
+	{
+		highPoints = 0;
+	}
+	else
+	{
+		fscanf_s(file, "%d", &highPoints);
+		fclose(file);
+	}
+
+	this->points = 0;
 }
 
 void Game::initWorld()
 {
-	this->worldBackgroundTexture.loadFromFile("Images/background.jpg");
+	this->worldBackgroundTexture.loadFromFile("Images/Map/Map.png");
 	this->worldBackground.setTexture(this->worldBackgroundTexture);
-	this->worldBackground.setScale(1.3f, 1.1f);
+	this->worldBackground.setScale(4.f, 4.f);
 }
 
 void Game::initPlayer()
@@ -82,10 +124,10 @@ void Game::initVillains()
 void Game::initItems()
 {
 	this->spawnTimerItemMax = 200.f;
-	//this->spawnTimerItem = 0.f;
+	this->spawnTimerItem = 0.f;
 
 	this->itemEffectTimerMax = 100.f;
-	//this->itemEffectTimer = 0.f;
+	this->itemEffectTimer = 0.f;
 }
 
 void Game::initGame()
@@ -135,14 +177,22 @@ void Game::run()
 	while (this->window->isOpen())
 	{
 		this->updatePollEvent();
+		
 		if (this->player->getHp() > 0)
+		{
 			this->update();
+		}
+
 		else
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
 			{
-				updateDelete();
 				initGame();
+			}
+
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+			{
+				this->window->close();
 			}
 		}
 
@@ -216,7 +266,7 @@ void Game::updateVillains()
 
 		if (villain->getBounds().intersects(this->player->getBounds()))
 		{
-			//this->player->loseHP(this->villains.at(counter)->getDamage());
+			this->player->loseHP(this->villains.at(counter)->getDamage());
 			delete this->villains.at(counter);
 			this->villains.erase(this->villains.begin() + counter);
 		}
@@ -232,7 +282,7 @@ void Game::updateItems()
 		this->items.push_back(new Item(
 			rand() % 1440,
 			rand() % 1080,
-			2));
+			rand() % 4 + 1));
 
 		this->spawnTimerItem = 0.f;
 	}
@@ -240,7 +290,6 @@ void Game::updateItems()
 	unsigned counter = 0;
 	for (auto* item : this->items)
 	{
-		cout << item << endl;
 		if (item->getBounds().intersects(this->player->getBounds()))
 		{
 			if (this->items.at(counter)->getType() == 1)
@@ -249,7 +298,7 @@ void Game::updateItems()
 			}
 			else if (this->items.at(counter)->getType() == 2)
 			{
-				//this->player->setAttackSpeed(3.f);
+				this->player->setDamage(3.f);
 			}
 			else if (this->items.at(counter)->getType() == 3)
 			{
@@ -259,14 +308,30 @@ void Game::updateItems()
 			}
 			else if (this->items.at(counter)->getType() == 4)
 			{
-				this->player->setSpeed(
-					this->player->getSpeed() +
-					this->items.at(counter)->getSpeed());
+				this->player->setSpeed(10.f);
 			}
+
+			itemBtn = 1;
+			spawnTimerItem = 0;
 			delete this->items.at(counter);
 			this->items.erase(this->items.begin() + counter);
 		}
 		++counter;
+	}
+}
+
+void Game::updateReset()
+{
+	if (itemBtn == 1)
+	{
+		this->itemEffectTimer += 0.5f;
+	}
+
+	if (this->spawnTimerItem > this->itemEffectTimer)
+	{
+		this->player->setAttackSpeed(6.f);
+		this->player->setSpeed(5.f);
+		this->itemBtn = 0;
 	}
 }
 
@@ -297,18 +362,27 @@ void Game::updateInput()
 
 void Game::updateGui()
 {
-	/*std::stringstream ss;
+	std::stringstream ss;
 	std::stringstream ss_2;
+	std::stringstream hpContext;
+	std::stringstream playerAttack;
+	std::stringstream playerSpeed;
 
-	ss << "SCORE: " << this->points;
-	ss_2 << "BEST SCORE: " << this->highPoints;
+	ss << "SCORE : " << this->points;
+	ss_2 << "BEST SCORE : " << this->highPoints;
+
+	hpContext << this->player->getHp() << " / " << this->player->getHpMax() << endl;
+	playerAttack << "Attack : " << this->player->getDamage() << endl;
+	playerSpeed << "Speed : " << this->player->getSpeed() << endl;
 
 	this->pointText.setString(ss.str());
 	this->highPointText.setString(ss_2.str());
-	*/
+	this->playerHpText.setString(hpContext.str());
+	this->playerAttackText.setString(playerAttack.str());
+	this->playerSpeedText.setString(playerSpeed.str());
 
 	float hpPercent = static_cast<float>(this->player->getHp()) / this->player->getHpMax();
-	this->playerHpBar.setSize(sf::Vector2f(230.f * hpPercent, this->playerHpBar.getSize().y));
+	this->playerHpBar.setSize(sf::Vector2f(300.f * hpPercent, this->playerHpBar.getSize().y));
 }
 
 void Game::updateCombat()
@@ -353,7 +427,6 @@ void Game::updateBullets()
 			|| bullet->getBounds().left + bullet->getBounds().width < 0.f
 			|| bullet->getBounds().left > 1440)
 		{
-			cout << bullet << endl;
 			delete this->bullets.at(counter);
 			this->bullets.erase(this->bullets.begin() + counter);
 		}
@@ -369,6 +442,8 @@ void Game::update()
 	this->updateGui();
 
 	this->updateInput();
+
+	this->updateReset();
 	
 	this->updatePlayer();
 
@@ -384,12 +459,19 @@ void Game::update()
 void Game::renderGui()
 {
 	this->window->draw(this->titleText);
+
 	this->window->draw(this->pointText);
 	this->window->draw(this->highPointText);
 
 	this->window->draw(this->playerHpBarBot);
 	this->window->draw(this->playerHpBarBack);
 	this->window->draw(this->playerHpBar);
+	this->window->draw(this->playerAbility);
+	this->window->draw(this->playerItem);
+
+	this->window->draw(this->playerHpText);
+	this->window->draw(this->playerAttackText);
+	this->window->draw(this->playerSpeedText);
 }
 
 void Game::renderWorld()
@@ -397,12 +479,8 @@ void Game::renderWorld()
 	this->window->draw(this->worldBackground);
 }
 
-void Game::render()
+void Game::renderObjects()
 {
-	this->window->clear();
-
-	this->renderWorld();
-
 	this->player->render(*this->window);
 
 	for (auto* bullet : this->bullets)
@@ -419,12 +497,24 @@ void Game::render()
 	{
 		item->render(this->window);
 	}
+}
+
+void Game::render()
+{
+	this->window->clear();
+
+	this->renderWorld();
 
 	this->renderGui();
 
+	if (this->player->getHp() > 0)
+	{
+		this->renderObjects();
+	}
 	if (this->player->getHp() <= 0)
 	{
 		this->window->draw(this->gameOverText);
+		this->window->draw(this->gameRetryText);
 	}
 
 	this->window->display();

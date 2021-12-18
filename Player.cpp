@@ -4,8 +4,8 @@
 Player::Player()
 {
 	//texture
-	this->texture_1.loadFromFile("Images/main_character-1.png");
-	this->texture_2.loadFromFile("Images/main_character-2.png");
+	this->texture_1.loadFromFile("Images/characters/Main/main_left.png");
+	this->texture_2.loadFromFile("Images/characters/Main/main_right.png");
 	this->shape.setTexture(texture_1);
 	this->shape.setScale(0.5f, 0.5f);
 
@@ -71,6 +71,11 @@ void Player::setDirection(float X, float Y)
 	this->dir.y = Y;
 }
 
+void Player::setDamage(int x)
+{
+	this->playerDamage = x;
+}
+
 const bool Player::canAttack()
 {
 	if (this->attackCool >= this->attackCoolMax)
@@ -118,6 +123,11 @@ const sf::Vector2f& Player::getPosition() const
 void Player::setAttackSpeed(float x)
 {
 	this->attackCoolMax = x;
+}
+
+const int Player::getDamage() const
+{
+	return this->playerDamage;
 }
 
 const float Player::getAttackSpeed() const
