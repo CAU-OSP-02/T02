@@ -1,1 +1,2 @@
 C:\Users\woosu\OneDrive\바탕 화면\OSP_SFML\osp_sfml\x64\Debug\osp_sfml.exe
+C:\osp_git_02\T02\osp_sfml\x64\Debug\osp_sfml.exe
