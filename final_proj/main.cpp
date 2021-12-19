@@ -6,7 +6,7 @@ int main()
 
 	Game game;
 
-	game.run();
+	game.run() ;
 
 	//End of application
 	return 0;

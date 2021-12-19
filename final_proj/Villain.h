@@ -8,6 +8,8 @@ private:
 	sf::Sprite shape;
 	sf::Texture texture_1;
 	sf::Texture texture_2;
+	sf::RectangleShape hpBar;
+	sf::RectangleShape hpBarBack;
 	sf::Vector2f direction;
 
 	float speed = 0.f;
@@ -18,15 +20,16 @@ private:
 	int hp = 0;
 	int hpMax = 0;
 	int damage = 0;
+	int type;
 	float speedDown = 0.f;
 
 
 public:
-	//type에 따라서 디섯 가지로 나뉜다.
+	//type에 따라서 세 가지로 나뉜다.
 	// 1. 핑거 프린세스
 	// 2. 헬스 트레이너
 	// 3. 팀플 버스
-	// 4. 꼰대 선배
+
 
 	Villain(float posX, float posY, int type);
 	~Villain();
@@ -36,6 +39,7 @@ public:
 	const int& getHp() const;
 	const int& getHpMax() const;
 	const int& getPoints() const;
+	const int& getType() const;
 	const sf::Vector2f& getDir() const;
 
 	void setHp(const int hp);

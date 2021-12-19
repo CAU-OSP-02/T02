@@ -34,11 +34,14 @@ void Game::initGui()
 	this->playerHpText.setFont(this->font);
 	this->playerHpText.setFillColor(sf::Color::White);
 
+	this->playerLevelText.setFont(this->font);
+	this->playerLevelText.setFillColor(sf::Color::Black);
+
 	this->playerAttackText.setFont(this->font);
-	this->playerAttackText.setFillColor(sf::Color::Blue);
+	this->playerAttackText.setFillColor(sf::Color::Black);
 
 	this->playerSpeedText.setFont(this->font);
-	this->playerSpeedText.setFillColor(sf::Color::Magenta);
+	this->playerSpeedText.setFillColor(sf::Color::Black);
 
 	this->playerHpBar.setFillColor(sf::Color(200, 20, 20, 100));
 
@@ -48,12 +51,24 @@ void Game::initGui()
 	this->playerHpBarBot.setFillColor(sf::Color(184, 184, 178, 100));
 
 	this->playerAbility.setFillColor(sf::Color(184, 184, 178, 100));
-
-	this->playerItem.setFillColor(sf::Color(184, 184, 178, 100));
 }
 
 void Game::initSystem()
 {
+	music.openFromFile("Audios/background.ogg");
+	finger.loadFromFile("Audios/finger.ogg");
+	health.loadFromFile("Audios/health.ogg");
+	bus.loadFromFile("Audios/bus.ogg");
+	latte.loadFromFile("Audios/latte.ogg");
+
+	sound_1.setBuffer(finger);
+	sound_2.setBuffer(health);
+	sound_3.setBuffer(bus);
+	sound_4.setBuffer(latte);
+
+	this->music.setLoop(true);
+	this->music.play();
+
 	FILE* file = fopen("score.dat", "rt");
 	if (file == 0)
 	{
@@ -74,6 +89,7 @@ void Game::initWorld()
 	this->worldBackground.setTexture(this->worldBackgroundTexture);
 
 	this->view.setViewport(sf::FloatRect(0, 0, 1, 1));
+	this->ui.setCenter(720, 540);
 	this->zoom = 1.f;
 }
 
@@ -81,8 +97,8 @@ void Game::initPlayer()
 {
 	this->player = new Player();
 	this->level = 1;
-	this->points = 190;
-	this->player->setPosition(4000, 4000);
+	this->points = 400;
+	this->player->setPosition(1000, 1000);
 }
 
 void Game::initBullet()
@@ -93,8 +109,19 @@ void Game::initBullet()
 void Game::initVillains()
 {
 	villains.clear();
-	this->spawnTimerVillainMax = 100.f;
+	this->spawnTimerVillainMax = 200.f;
 	this->spawnTimerVillain = this->spawnTimerVillainMax;
+
+	this->villainTimerMax = 100.f;
+	this->villainTimer = 0.f;
+}
+
+void Game::initBosses()
+{
+	bosses.clear();
+	enemyBullets.clear();
+	this->spawnTimerBossMax = 1000.f;
+	this->spawnTimerBoss = this->spawnTimerBossMax;
 }
 
 void Game::initItems()
@@ -112,6 +139,7 @@ void Game::initGame()
 	this->initSystem();
 	this->initPlayer();
 	this->initVillains();
+	this->initBosses();
 	this->initItems();
 }
 
@@ -135,17 +163,27 @@ void Game::updateDelete()
 {
 	delete this->player;
 
-	for (auto* i : this->bullets)
+	for (Bullet* i : this->bullets)
 	{
 		delete i;
 	}
 
-	for (auto* i : this->items)
+	for (Item* i : this->items)
 	{
 		delete i;
 	}
 
-	for (auto* i : this->villains)
+	for (Villain* i : this->villains)
+	{
+		delete i;
+	}
+
+	for (EnemyBullet* i : this->enemyBullets)
+	{
+		delete i;
+	}
+
+	for (Boss* i : bosses)
 	{
 		delete i;
 	}
@@ -155,10 +193,13 @@ void Game::run()
 {
 	while (this->window->isOpen())
 	{
+		
+
 		this->updatePollEvent();
 
 		if (this->player->getHp() > 0)
 		{
+
 			this->update();
 		}
 
@@ -215,39 +256,40 @@ void Game::updateVillains()
 		{
 			this->villains.push_back(new Villain(
 				-100,
-				rand() % 8200,
-				rand() % level + 1));
+				float(rand() % 8200),
+				rand() % (level) + 1));
 		}
 
 		else if (this->state == 1)
 		{
 			this->villains.push_back(new Villain(
 				100,
-				rand() % 8200,
-				rand() % level + 1));
+				float(rand() % 8200),
+				rand() % (level) + 1));
 		}
 
 		else if (this->state == 2)
 		{
 			this->villains.push_back(new Villain(
-				rand() % 8200,
+				float(rand() % 8200),
 				-100,
-				rand() % level + 1));
+				rand() % (level) + 1));
 		}
 
 		else if (this->state == 3)
 		{
 			this->villains.push_back(new Villain(
-				rand() % 8200,
+				float(rand() % 8200),
 				100,
-				rand() % level + 1));
+				rand() % (level) + 1));
 		}
 
 		this->spawnTimerVillain = 0.f;
 	}
+	
 
 	unsigned counter = 0;
-	for (auto* villain : this->villains)
+	for (Villain* villain : this->villains)
 	{
 		villain->update();
 
@@ -259,29 +301,127 @@ void Game::updateVillains()
 
 		if (villain->getBounds().intersects(this->player->getBounds()))
 		{
+			if (villain->getType() == 1)
+			{
+				this->sound_1.play();
+				sound_1.setPlayingOffset(sf::seconds(0.7));
+			}
+
+			if (villain->getType() == 2)
+			{
+				this->sound_2.play();
+			}
+
+			if (villain->getType() == 3)
+			{
+				this->sound_3.play();
+			}
+
 			this->player->loseHP(this->villains.at(counter)->getDamage());
+			this->player->setSpeed(this->player->getSpeed() - this->villains.at(counter)->getSpeedDown());
+			this->villainBtn = 1;
+			this->villainTimer = 0.f;
 			delete this->villains.at(counter);
 			this->villains.erase(this->villains.begin() + counter);
 		}
 		++counter;
 	}
+
 }
 
-void Game::updateItems()
+void Game::updateBosses()
+{
+	this->spawnTimerBoss += 0.5f;
+
+	if (level == 4)
+	{
+		if (this->spawnTimerBoss >= spawnTimerBossMax)
+		{
+			this->state_1 = rand() % 4;
+
+			if (this->state == 0)
+			{
+				this->bosses.push_back(new Boss(
+					-100,
+					float(rand() % 8200),
+					1));
+			}
+
+			else if (this->state == 1)
+			{
+				this->bosses.push_back(new Boss(
+					100,
+					float(rand() % 8200),
+					1));
+			}
+
+			else if (this->state == 2)
+			{
+				this->bosses.push_back(new Boss(
+					float(rand() % 8200),
+					-100,
+					1));
+			}
+
+			else if (this->state == 3)
+			{
+				this->bosses.push_back(new Boss(
+					float(rand() % 8200),
+					100,
+					1));
+			}
+			this->spawnTimerBoss = 0.f;
+		}
+	}
+
+	for (Boss* boss : this->bosses)
+	{
+		boss->update();
+
+		float x = this->player->getPosition().x - boss->getPosition().x;
+		float y = this->player->getPosition().y - boss->getPosition().y;
+		float r = sqrt(x * x + y * y);
+
+		boss->setDir(x / r, y / r);
+
+		if (x * x + y * y < 16000)
+		{
+			boss->setBound(false);
+		}
+		else
+		{
+			boss->setBound(true);
+		}
+	}
+
+	for (Boss* boss : this->bosses)
+	{
+		if (boss->canAttack())
+		{
+			this->enemyBullets.push_back(new EnemyBullet(
+				boss->getPosition().x + boss->getBounds().width / 2.f,
+				boss->getPosition().y + boss->getBounds().height / 2.f,
+				boss->getDir().x,
+				boss->getDir().y));
+		}
+	}
+}
+
+void Game::updateItems() 
 {
 	this->spawnTimerItem += 0.5f;
 	if (this->spawnTimerItem >= spawnTimerItemMax)
 	{
 		this->items.push_back(new Item(
-			rand() % 8400 - 200,
-			rand() % 8400 - 200,
+			rand() % 8200 + 200,
+			rand() % 8200 + 200,
 			rand() % 4 + 1));
 
 		this->spawnTimerItem = 0.f;
 	}
 
 	unsigned counter = 0;
-	for (auto* item : this->items)
+	for (Item* item : this->items)
 	{
 		if (item->getBounds().intersects(this->player->getBounds()))
 		{
@@ -305,7 +445,8 @@ void Game::updateItems()
 			}
 
 			itemBtn = 1;
-			spawnTimerItem = 0;
+			itemEffectTimer = 0.f;
+			spawnTimerItem = 0.f;
 			delete this->items.at(counter);
 			this->items.erase(this->items.begin() + counter);
 		}
@@ -327,7 +468,20 @@ void Game::updateReset()
 		this->itemBtn = 0;
 		this->itemEffectTimer = 0.f;
 	}
+
+	if (villainBtn == 1)
+	{
+		this->villainTimer += 0.5f;
+	}
+
+	if (this->villainTimer > this->villainTimerMax)
+	{
+		this->player->setSpeed(5.f);
+		this->villainBtn = 0;
+		this->villainTimer = 0.f;
+	}
 }
+
 
 void Game::updateWorld()
 {
@@ -368,12 +522,12 @@ void Game::updateLevel()
 		this->level = 2;
 	}
 
-	else if (points >= 400)
+	if (points >= 400)
 	{
 		this->level = 3;
 	}
 
-	else if (points >= 700)
+	if (points >= 700)
 	{
 		this->level = 4;
 	}
@@ -384,6 +538,7 @@ void Game::updateGui()
 	std::stringstream ss;
 	std::stringstream ss_2;
 	std::stringstream hpContext;
+	std::stringstream playerLevel;
 	std::stringstream playerAttack;
 	std::stringstream playerSpeed;
 
@@ -391,12 +546,14 @@ void Game::updateGui()
 	ss_2 << "BEST SCORE : " << this->highPoints;
 
 	hpContext << this->player->getHp() << " / " << this->player->getHpMax() << endl;
+	playerLevel << "Level : " << this->level << endl;
 	playerAttack << "Attack : " << this->player->getDamage() << endl;
 	playerSpeed << "Speed : " << this->player->getSpeed() << endl;
 
 	this->pointText.setString(ss.str());
 	this->highPointText.setString(ss_2.str());
 	this->playerHpText.setString(hpContext.str());
+	this->playerLevelText.setString(playerLevel.str());
 	this->playerAttackText.setString(playerAttack.str());
 	this->playerSpeedText.setString(playerSpeed.str());
 
@@ -408,37 +565,42 @@ void Game::updateGui()
 	this->pointText.setCharacterSize(70 * zoom);
 	this->highPointText.setCharacterSize(30 * zoom);
 	this->gameOverText.setCharacterSize(150 * zoom);
+	this->gameRetryText.setCharacterSize(50 * zoom);
 	this->playerHpText.setCharacterSize(40 * zoom);
+	this->playerLevelText.setCharacterSize(30 * zoom);
 	this->playerAttackText.setCharacterSize(30 * zoom);
 	this->playerSpeedText.setCharacterSize(30 * zoom);
-	this->playerHpBar.setSize(sf::Vector2f(300.f * zoom, 50.f * zoom));
+	this->playerHpBar.setSize(sf::Vector2f(300.f * zoom * hpPercent, 50.f * zoom));
 	this->playerHpBarBack.setSize(sf::Vector2f(300.f * zoom, 50.f * zoom));
 	this->playerHpBarBot.setSize(sf::Vector2f(320.f * zoom, 70.f * zoom));
-	this->playerAbility.setSize(sf::Vector2f(200.f * zoom, 70.f * zoom));
-	this->playerItem.setSize(sf::Vector2f(200.f * zoom, 200.f * zoom));
+	this->playerAbility.setSize(sf::Vector2f(200.f * zoom, 120.f * zoom));
+
 
 	this->titleText.setPosition(view.getCenter().x - 700.f * zoom, view.getCenter().y - 540.f * zoom);
 	this->pointText.setPosition(view.getCenter().x - 120.f * zoom, view.getCenter().y - 510.f * zoom);
 	this->highPointText.setPosition(view.getCenter().x - 60.f * zoom, view.getCenter().y - 540.f * zoom);
 	this->gameOverText.setPosition(
 		view.getCenter().x - this->gameOverText.getGlobalBounds().width / 2.f,
-		view.getCenter().y - this->gameOverText.getGlobalBounds().height / 2.f - 100);
+		view.getCenter().y - this->gameOverText.getGlobalBounds().height / 2.f - 100.f * zoom);
+	this->gameRetryText.setPosition(
+		view.getCenter().x - this->gameRetryText.getGlobalBounds().width / 2.f,
+		view.getCenter().y - this->gameRetryText.getGlobalBounds().height / 2.f + 100.f * zoom);
 	this->playerHpText.setPosition(
 		view.getCenter().x - playerHpText.getGlobalBounds().width / 2,
 		view.getCenter().y + 360.f * zoom);
-	this->playerAttackText.setPosition(view.getCenter().x - 370.f * zoom, view.getCenter().y + 350.f * zoom);
-	this->playerSpeedText.setPosition(view.getCenter().x - 370.f * zoom, view.getCenter().y + 380.f * zoom);
+	this->playerLevelText.setPosition(view.getCenter().x - 370.f * zoom, view.getCenter().y + 335.f * zoom);
+	this->playerAttackText.setPosition(view.getCenter().x - 370.f * zoom, view.getCenter().y + 365.f * zoom);
+	this->playerSpeedText.setPosition(view.getCenter().x - 370.f * zoom, view.getCenter().y + 395.f * zoom);
 
 	this->playerHpBar.setPosition(view.getCenter().x - 150.f * zoom, view.getCenter().y + 360.f * zoom);
 	this->playerHpBarBack.setPosition(view.getCenter().x - 150.f * zoom, view.getCenter().y + 360.f * zoom);
 	this->playerHpBarBot.setPosition(view.getCenter().x - 160.f * zoom, view.getCenter().y + 350.f * zoom);
-	this->playerAbility.setPosition(view.getCenter().x - 420.f * zoom, view.getCenter().y + 350.f * zoom);
-	this->playerItem.setPosition(view.getCenter().x - 690.f * zoom, view.getCenter().y + 260.f * zoom);
+	this->playerAbility.setPosition(view.getCenter().x - 420.f * zoom, view.getCenter().y + 330.f * zoom);
 }
 
 void Game::updateCombat()
 {
-	for (int i = 0; i < this->villains.size(); ++i)
+	for (size_t i = 0; i < this->villains.size(); ++i)
 	{
 		bool enemy_deleted = false;
 
@@ -446,16 +608,59 @@ void Game::updateCombat()
 		{
 			if (this->villains[i]->getBounds().intersects(this->bullets[k]->getBounds()))
 			{
-				this->points += this->villains[i]->getPoints();
 
-				delete this->villains[i];
-				this->villains.erase(this->villains.begin() + i);
+				
 
+				this->villains[i]->setHp(this->villains[i]->getHp() - this->player->getDamage());
+
+				if (this->villains[i]->getHp() <= 0)
+				{
+					this->points += this->villains[i]->getPoints();
+
+					delete this->villains[i];
+					this->villains.erase(this->villains.begin() + i);
+
+					enemy_deleted = true;
+				}
 				delete this->bullets[k];
 				this->bullets.erase(this->bullets.begin() + k);
-
-				enemy_deleted = true;
 			}
+		}
+	}
+
+	for (size_t i = 0; i < this->bosses.size(); ++i)
+	{
+		bool enemy_deleted = false;
+
+		for (size_t k = 0; k < this->bullets.size() && enemy_deleted == false; k++)
+		{
+			if (this->bosses[i]->getBounds().intersects(this->bullets[k]->getBounds()))
+			{
+
+				this->bosses[i]->setHp(this->bosses[i]->getHp() - this->player->getDamage());
+
+				if (this->bosses[i]->getHp() <= 0)
+				{
+					this->points += this->bosses[i]->getPoints();
+
+					delete this->bosses[i];
+					this->bosses.erase(this->bosses.begin() + i);
+
+					enemy_deleted = true;
+				}
+				delete this->bullets[k];
+				this->bullets.erase(this->bullets.begin() + k);
+			}
+		}
+	}
+
+	for (size_t k = 0; k < this->enemyBullets.size(); k++)
+	{
+		if (this->player->getBounds().intersects(this->enemyBullets[k]->getBounds()))
+		{
+			this->player->setHP(this->player->getHp() - 2);
+			delete this->enemyBullets[k];
+			this->enemyBullets.erase(this->enemyBullets.begin() + k);
 		}
 	}
 }
@@ -492,20 +697,38 @@ void Game::updateBullets()
 {
 	unsigned counter = 0;
 
-	for (auto* bullet : this->bullets)
+	for (Bullet* bullet : this->bullets)
 	{
 		bullet->update();
 
-		if (bullet->getBounds().top + bullet->getBounds().height <= 0.f
-			|| bullet->getBounds().top >= 8457
-			|| bullet->getBounds().left + bullet->getBounds().width <= 0.f
-			|| bullet->getBounds().left >= 8457)
+		if (bullet->getBounds().top + bullet->getBounds().height <= view.getCenter().y - 540.f * zoom
+			|| bullet->getBounds().top >= view.getCenter().y + 540.f * zoom
+			|| bullet->getBounds().left + bullet->getBounds().width <= view.getCenter().x - 720.f * zoom
+			|| bullet->getBounds().left >= view.getCenter().x + 720.f * zoom)
 		{
 			delete this->bullets.at(counter);
 			this->bullets.erase(this->bullets.begin() + counter);
 		}
 
 		++counter;
+	}
+
+	unsigned counter_1 = 0;
+
+	for (EnemyBullet* enemyBullet : this->enemyBullets)
+	{
+		enemyBullet->update();
+
+		if (enemyBullet->getBounds().top + enemyBullet->getBounds().height <= view.getCenter().y - 800.f * zoom
+			|| enemyBullet->getBounds().top >= view.getCenter().y + 800.f * zoom
+			|| enemyBullet->getBounds().left + enemyBullet->getBounds().width <= view.getCenter().x - 1200.f * zoom
+			|| enemyBullet->getBounds().left >= view.getCenter().x + 1200.f * zoom)
+		{
+			delete this->enemyBullets.at(counter_1);
+			this->enemyBullets.erase(this->enemyBullets.begin() + counter_1);
+		}
+
+		++counter_1;
 	}
 }
 
@@ -517,6 +740,8 @@ void Game::update()
 
 	this->updateReset();
 
+	this->updateLevel();
+
 	this->updateCollision();
 
 	this->updatePlayer();
@@ -524,6 +749,8 @@ void Game::update()
 	this->updateBullets();
 
 	this->updateVillains();
+
+	this->updateBosses();
 
 	this->updateItems();
 
@@ -543,9 +770,9 @@ void Game::renderGui()
 	this->window->draw(this->playerHpBarBack);
 	this->window->draw(this->playerHpBar);
 	this->window->draw(this->playerAbility);
-	this->window->draw(this->playerItem);
 
 	this->window->draw(this->playerHpText);
+	this->window->draw(this->playerLevelText);
 	this->window->draw(this->playerAttackText);
 	this->window->draw(this->playerSpeedText);
 }
@@ -559,17 +786,27 @@ void Game::renderObjects()
 {
 	this->player->render(*this->window);
 
-	for (auto* bullet : this->bullets)
+	for (Bullet* bullet : this->bullets)
 	{
 		bullet->render(this->window);
 	}
 
-	for (auto* villain : this->villains)
+	for (Villain* villain : this->villains)
 	{
 		villain->render(this->window);
 	}
 
-	for (auto* item : this->items)
+	for (EnemyBullet* enemyBullet : this->enemyBullets)
+	{
+		enemyBullet->render(this->window);
+	}
+
+	for (Boss* boss : this->bosses)
+	{
+		boss->render(this->window);
+	}
+
+	for (Item* item : this->items)
 	{
 		item->render(this->window);
 	}
@@ -577,7 +814,7 @@ void Game::renderObjects()
 
 void Game::render()
 {
-	this->window->clear();
+	this->window->clear(sf::Color(0, 100, 0));
 
 	this->renderWorld();
 
@@ -586,14 +823,13 @@ void Game::render()
 		this->renderObjects();
 	}
 
+	this->renderGui();
+
 	if (this->player->getHp() <= 0)
 	{
 		this->window->draw(this->gameOverText);
 		this->window->draw(this->gameRetryText);
 	}
-
-
-	this->renderGui();
 
 	this->window->display();
 }

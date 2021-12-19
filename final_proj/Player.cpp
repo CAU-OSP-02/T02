@@ -143,6 +143,11 @@ void Player::setSpeed(float x)
 	{
 		this->playerSpeed = 10;
 	}
+
+	if (this->playerSpeed <= 1)
+	{
+		this->playerSpeed = 1;
+	}
 }
 
 const float Player::getSpeed() const 

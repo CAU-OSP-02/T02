@@ -2,8 +2,9 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Villain.h"
+#include "EnemyBullet.h"
 #include "Item.h"
-#define _CRT_SECURE_NO_WARNINGS
+#include "Boss.h"
 
 class Game
 {
@@ -13,7 +14,20 @@ private:
 	sf::RenderWindow* window;
 
 	sf::View view;
-	sf::View miniMap;
+	sf::View ui;
+
+	sf::Music music;
+	sf::SoundBuffer finger;
+	sf::SoundBuffer health;
+	sf::SoundBuffer bus;
+	sf::SoundBuffer latte;
+	sf::SoundBuffer professor;
+
+	sf::Sound sound_1;
+	sf::Sound sound_2;
+	sf::Sound sound_3;
+	sf::Sound sound_4;
+	sf::Sound sound_5;
 
 	//Player
 	Player* player;
@@ -21,10 +35,22 @@ private:
 	//Bullets
 	std::vector<Bullet*>bullets;
 
+	//EnemyBullets
+	std::vector<EnemyBullet*>enemyBullets;
+
+	//Bosses
+	std::vector<Boss*>bosses;
+
 	//Villain
 	std::vector<Villain*>villains;
 	float spawnTimerVillain;
 	float spawnTimerVillainMax;
+
+	float villainTimer;
+	float villainTimerMax;
+
+	float spawnTimerBoss;
+	float spawnTimerBossMax;
 
 	//Item
 	std::vector<Item*>items;
@@ -46,6 +72,7 @@ private:
 	sf::Text gameOverText;
 	sf::Text gameRetryText;
 	sf::Text playerHpText;
+	sf::Text playerLevelText;
 	sf::Text playerAttackText;
 	sf::Text playerSpeedText;
 
@@ -57,13 +84,14 @@ private:
 	float zoom = 1.f;
 	int level = 1;
 	int state = 0;
+	int state_1 = 0;
 	int itemBtn = 0;
+	int villainBtn = 0;
 
 	sf::RectangleShape playerHpBar;
 	sf::RectangleShape playerHpBarBack;
 	sf::RectangleShape playerHpBarBot;
 	sf::RectangleShape playerAbility;
-	sf::RectangleShape playerItem;
 
 	//init functions
 	void initWindow();
@@ -73,6 +101,7 @@ private:
 	void initPlayer();
 	void initBullet();
 	void initVillains();
+	void initBosses();
 	void initItems();
 	void initGame();
 
@@ -95,7 +124,8 @@ public:
 	void updatePlayer();
 	void updateBullets();
 	void updateVillains();
-	void updateItems();
+	void updateBosses();
+	void updateItems() throw(out_of_range);
 	void updateReset();
 	void update();
 
