@@ -79,6 +79,74 @@ void Game::initGui()
 	this->playerItem.setSize(sf::Vector2f(200.f, 200.f));
 	this->playerItem.setFillColor(sf::Color(184, 184, 178, 100));
 	this->playerItem.setPosition(sf::Vector2f(30.f, 800.f));
+
+	this->gameStoryTitleText.setFont(this->font);
+	this->gameStoryTitleText.setStyle(sf::Text::Bold);
+	this->gameStoryTitleText.setCharacterSize(100);
+	this->gameStoryTitleText.setFillColor(sf::Color::Black);
+	this->gameStoryTitleText.setPosition(500.f, 200.f);
+	this->gameStoryTitleText.setString("Game Story");
+	
+	this->gameStoryText.setFont(this->font);
+	this->gameStoryText.setCharacterSize(40);
+	this->gameStoryText.setFillColor(sf::Color::Black);
+	this->gameStoryText.setPosition(50.f, 400.f);
+	this->gameStoryText.setString("One day, villains who interfere with his college life come to ordinary college student Kim Ye-gong!\nIf you encounter villains such as Finger Princess, fitness trainer,\nggondae seniors, and freerider(team bus members), you will die.\nIt's over when you defeat the villains and get rid of the final boss, the professor\nWill Kim Ye-gong be able to finish the semester safely avoiding villains? ");
+
+	this->gameComponentTitleText.setFont(this->font);
+	this->gameComponentTitleText.setStyle(sf::Text::Bold);
+	this->gameComponentTitleText.setCharacterSize(100);
+	this->gameComponentTitleText.setFillColor(sf::Color::Black);
+	this->gameComponentTitleText.setPosition(500.f, 150.f);
+	this->gameComponentTitleText.setString("Component");
+
+	this->gameVillainText.setFont(this->font);
+	this->gameVillainText.setStyle(sf::Text::Bold);
+	this->gameVillainText.setCharacterSize(40);
+	this->gameVillainText.setFillColor(sf::Color::Black);
+	this->gameVillainText.setPosition(100.f, 300.f);
+	this->gameVillainText.setString("Villian --------------------- Ability");
+
+	this->gameVillainComponentText.setFont(this->font);
+	this->gameVillainComponentText.setCharacterSize(30);
+	this->gameVillainComponentText.setFillColor(sf::Color::Black);
+	this->gameVillainComponentText.setPosition(50.f, 400.f);
+	this->gameVillainComponentText.setString("FingerPrincess                >>>>>                  Bump into a player\n\n     Trainer                         >>>>>                  Bump into a player\n\n   BusMember                   >>>>>                  Bump into a player\n\n     Senior                         >>>>>                        Bullet attack\n\nProfessor(Boss)         >>>>>                        Bullet attack");
+
+	this->gameItemText.setFont(this->font);
+	this->gameItemText.setStyle(sf::Text::Bold);
+	this->gameItemText.setCharacterSize(40);
+	this->gameItemText.setFillColor(sf::Color::Black);
+	this->gameItemText.setPosition(800.f, 300.f);
+	this->gameItemText.setString("Item --------------------- Function");
+
+	this->gameItemComponentText.setFont(this->font);
+	this->gameItemComponentText.setCharacterSize(30);
+	this->gameItemComponentText.setFillColor(sf::Color::Black);
+	this->gameItemComponentText.setPosition(750.f, 400.f);
+	this->gameItemComponentText.setString("Glasses                   >>>>>            Increase the map magnification\n\nPencil                     >>>>>          Increase attack power\n\nCoffee                    >>>>>           Speed up of attack speed\n\nScooter                >>>>>                   Speed up");
+
+	this->gameManipulationTitleText.setFont(this->font);
+	this->gameManipulationTitleText.setStyle(sf::Text::Bold);
+	this->gameManipulationTitleText.setCharacterSize(100);
+	this->gameManipulationTitleText.setFillColor(sf::Color::Black);
+	this->gameManipulationTitleText.setPosition(500.f, 150.f);
+	this->gameManipulationTitleText.setString("Manipulation");
+
+	this->gameManipulationText.setFont(this->font);
+	this->gameManipulationText.setStyle(sf::Text::Bold);
+	this->gameManipulationText.setCharacterSize(40);
+	this->gameManipulationText.setFillColor(sf::Color::Black);
+	this->gameManipulationText.setPosition(500.f, 300.f);
+	this->gameManipulationText.setString("Key --------------------- Function");
+
+	this->gameKeyText.setFont(this->font);
+	this->gameKeyText.setCharacterSize(30);
+	this->gameKeyText.setFillColor(sf::Color::Black);
+	this->gameKeyText.setPosition(515.f, 400.f);
+	this->gameKeyText.setString("W                      >>>>>                       Forward\n\nA                      >>>>>                            Left\n\nS                      >>>>>                           Back\n\nD                      >>>>>                           Right\n\nSpacebar         >>>>>                       Attack");
+	
+	
 }
 
 void Game::initSystem()
@@ -458,20 +526,34 @@ void Game::update()
 
 void Game::renderGui()
 {
-	this->window->draw(this->titleText);
+	//this->window->draw(this->titleText);
 
-	this->window->draw(this->pointText);
-	this->window->draw(this->highPointText);
+	//this->window->draw(this->pointText);
+	//this->window->draw(this->highPointText);
 
-	this->window->draw(this->playerHpBarBot);
-	this->window->draw(this->playerHpBarBack);
-	this->window->draw(this->playerHpBar);
-	this->window->draw(this->playerAbility);
-	this->window->draw(this->playerItem);
+	//this->window->draw(this->playerHpBarBot);
+	//this->window->draw(this->playerHpBarBack);
+	//this->window->draw(this->playerHpBar);
+	//this->window->draw(this->playerAbility);
+	//this->window->draw(this->playerItem);
 
-	this->window->draw(this->playerHpText);
-	this->window->draw(this->playerAttackText);
-	this->window->draw(this->playerSpeedText);
+	//this->window->draw(this->playerHpText);
+	//this->window->draw(this->playerAttackText);
+	//this->window->draw(this->playerSpeedText);
+
+	//this->window->draw(this->gameStoryTitleText);
+	//this->window->draw(this->gameStoryText);
+
+	//this->window->draw(this->gameComponentTitleText);
+	//this->window->draw(this->gameVillainText);
+	//this->window->draw(this->gameVillainComponentText);
+	//this->window->draw(this->gameItemText);
+	//this->window->draw(this->gameItemComponentText);
+
+	//this->window->draw(this->gameManipulationTitleText);
+	//this->window->draw(this->gameManipulationText);
+	//this->window->draw(this->gameKeyText);
+
 }
 
 void Game::renderWorld()

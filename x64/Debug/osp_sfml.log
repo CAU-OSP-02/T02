@@ -1,9 +1,9 @@
 ﻿  Game.cpp
-C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(225,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(233,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(240,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(248,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(284,11): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(283,11): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(301,29): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(293,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(301,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(308,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(316,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(352,11): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(351,11): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kyg02\OneDrive\바탕 화면\T02\Game.cpp(369,29): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   osp_sfml.vcxproj -> C:\Users\kyg02\OneDrive\바탕 화면\T02\x64\Debug\osp_sfml.exe

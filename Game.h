@@ -45,6 +45,19 @@ private:
 	sf::Text playerAttackText;
 	sf::Text playerSpeedText;
 
+	sf::Text gameStoryTitleText;
+	sf::Text gameStoryText;
+	
+	sf::Text gameComponentTitleText;
+	sf::Text gameVillainText;
+	sf::Text gameItemText;
+	sf::Text gameVillainComponentText;
+	sf::Text gameItemComponentText;
+
+	sf::Text gameManipulationTitleText;
+	sf::Text gameManipulationText;
+	sf::Text gameKeyText;
+
 	//Systems
 	unsigned points;
 	unsigned highPoints;
