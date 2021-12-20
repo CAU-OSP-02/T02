@@ -5,7 +5,7 @@
  - Woosung Chung
  - [Hyemin Yang](https://github.com/hyemworks)
  - Serin Kim
- - Yoogyum Kim
+ - Yugyum Kim
  - Donghyuk Choi
 
 
