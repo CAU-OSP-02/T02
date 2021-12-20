@@ -23,11 +23,21 @@ private:
 	sf::SoundBuffer latte;
 	sf::SoundBuffer professor;
 
+	sf::SoundBuffer coffee;
+	sf::SoundBuffer glasses;
+	sf::SoundBuffer pencil;
+	sf::SoundBuffer scooter;
+
 	sf::Sound sound_1;
 	sf::Sound sound_2;
 	sf::Sound sound_3;
 	sf::Sound sound_4;
 	sf::Sound sound_5;
+
+	sf::Sound sound_6;
+	sf::Sound sound_7;
+	sf::Sound sound_8;
+	sf::Sound sound_9;
 
 	//Player
 	Player* player;
@@ -82,6 +92,8 @@ private:
 	unsigned highPoints;
 
 	float zoom = 1.f;
+	bool profTrue;
+	bool gameOver;
 	int level = 1;
 	int state = 0;
 	int state_1 = 0;
@@ -125,7 +137,7 @@ public:
 	void updateBullets();
 	void updateVillains();
 	void updateBosses();
-	void updateItems() throw(out_of_range);
+	void updateItems();
 	void updateReset();
 	void update();
 

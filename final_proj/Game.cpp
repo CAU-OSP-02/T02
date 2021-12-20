@@ -60,11 +60,23 @@ void Game::initSystem()
 	health.loadFromFile("Audios/health.ogg");
 	bus.loadFromFile("Audios/bus.ogg");
 	latte.loadFromFile("Audios/latte.ogg");
+	professor.loadFromFile("Audios/professor.ogg");
+
+	coffee.loadFromFile("Audios/coffee.ogg");
+	glasses.loadFromFile("Audios/glasses.ogg");
+	pencil.loadFromFile("Audios/pencil.ogg");
+	scooter.loadFromFile("Audios/scooter.ogg");
 
 	sound_1.setBuffer(finger);
 	sound_2.setBuffer(health);
 	sound_3.setBuffer(bus);
 	sound_4.setBuffer(latte);
+	sound_5.setBuffer(professor);
+	
+	sound_6.setBuffer(glasses);
+	sound_7.setBuffer(pencil);
+	sound_8.setBuffer(coffee);
+	sound_9.setBuffer(scooter);
 
 	this->music.setLoop(true);
 	this->music.play();
@@ -96,8 +108,9 @@ void Game::initWorld()
 void Game::initPlayer()
 {
 	this->player = new Player();
+	this->gameOver = false;
 	this->level = 1;
-	this->points = 400;
+	this->points = 1000;
 	this->player->setPosition(1000, 1000);
 }
 
@@ -122,6 +135,8 @@ void Game::initBosses()
 	enemyBullets.clear();
 	this->spawnTimerBossMax = 1000.f;
 	this->spawnTimerBoss = this->spawnTimerBossMax;
+
+	profTrue = false;
 }
 
 void Game::initItems()
@@ -193,13 +208,10 @@ void Game::run()
 {
 	while (this->window->isOpen())
 	{
-		
-
 		this->updatePollEvent();
 
-		if (this->player->getHp() > 0)
+		if (this->player->getHp() > 0 && this->gameOver == false)
 		{
-
 			this->update();
 		}
 
@@ -219,7 +231,6 @@ void Game::run()
 				this->window->close();
 			}
 		}
-
 		this->render();
 	}
 }
@@ -326,7 +337,6 @@ void Game::updateVillains()
 		}
 		++counter;
 	}
-
 }
 
 void Game::updateBosses()
@@ -374,6 +384,16 @@ void Game::updateBosses()
 		}
 	}
 
+	if (level == 5 && profTrue == false)
+	{
+		this->bosses.push_back(
+			new Boss(
+				float(rand() % 8200 + 200),
+				float(rand() % 8200 + 200), 2));
+
+		this->profTrue = true;
+	}
+
 	for (Boss* boss : this->bosses)
 	{
 		boss->update();
@@ -402,7 +422,8 @@ void Game::updateBosses()
 				boss->getPosition().x + boss->getBounds().width / 2.f,
 				boss->getPosition().y + boss->getBounds().height / 2.f,
 				boss->getDir().x,
-				boss->getDir().y));
+				boss->getDir().y, 
+				boss->getType()));
 		}
 	}
 }
@@ -428,20 +449,24 @@ void Game::updateItems()
 			if (this->items.at(counter)->getType() == 1)
 			{
 				this->zoom = 1.8f;
+				this->sound_6.play();
 			}
 			else if (this->items.at(counter)->getType() == 2)
 			{
 				this->player->setDamage(1.f);
+				this->sound_7.play();
 			}
 			else if (this->items.at(counter)->getType() == 3)
 			{
 				this->player->setHP(
 					this->player->getHp() +
 					this->items.at(counter)->getHp());
+				this->sound_8.play();
 			}
 			else if (this->items.at(counter)->getType() == 4)
 			{
 				this->player->setSpeed(10.f);
+				this->sound_9.play();
 			}
 
 			itemBtn = 1;
@@ -481,7 +506,6 @@ void Game::updateReset()
 		this->villainTimer = 0.f;
 	}
 }
-
 
 void Game::updateWorld()
 {
@@ -531,6 +555,11 @@ void Game::updateLevel()
 	{
 		this->level = 4;
 	}
+
+	if (points >= 1000)
+	{
+		this->level = 5;
+	}
 }
 
 void Game::updateGui()
@@ -541,6 +570,33 @@ void Game::updateGui()
 	std::stringstream playerLevel;
 	std::stringstream playerAttack;
 	std::stringstream playerSpeed;
+	std::stringstream playerGrade;
+
+	if (level == 1)
+	{
+		playerGrade << "F" << endl;
+	}
+
+	else if (level == 2)
+	{
+		playerGrade << "C" << endl;
+	}
+
+	else if (level == 3)
+	{
+		playerGrade << "B" << endl;
+	}
+
+	else if (level == 4)
+	{
+		playerGrade << "A" << endl;
+	}
+
+	else if (level == 5)
+	{
+		playerGrade << "A+" << endl;
+	}
+
 
 	ss << "SCORE : " << this->points;
 	ss_2 << "BEST SCORE : " << this->highPoints;
@@ -556,6 +612,7 @@ void Game::updateGui()
 	this->playerLevelText.setString(playerLevel.str());
 	this->playerAttackText.setString(playerAttack.str());
 	this->playerSpeedText.setString(playerSpeed.str());
+	this->gameOverText.setString(playerGrade.str());
 
 	float hpPercent = static_cast<float>(this->player->getHp()) / this->player->getHpMax();
 	this->playerHpBar.setSize(sf::Vector2f(300.f * hpPercent, this->playerHpBar.getSize().y));
@@ -581,10 +638,10 @@ void Game::updateGui()
 	this->highPointText.setPosition(view.getCenter().x - 60.f * zoom, view.getCenter().y - 540.f * zoom);
 	this->gameOverText.setPosition(
 		view.getCenter().x - this->gameOverText.getGlobalBounds().width / 2.f,
-		view.getCenter().y - this->gameOverText.getGlobalBounds().height / 2.f - 100.f * zoom);
+		view.getCenter().y - this->gameOverText.getGlobalBounds().height / 2.f + 100.f * zoom);
 	this->gameRetryText.setPosition(
 		view.getCenter().x - this->gameRetryText.getGlobalBounds().width / 2.f,
-		view.getCenter().y - this->gameRetryText.getGlobalBounds().height / 2.f + 100.f * zoom);
+		view.getCenter().y - this->gameRetryText.getGlobalBounds().height / 2.f + 300.f * zoom);
 	this->playerHpText.setPosition(
 		view.getCenter().x - playerHpText.getGlobalBounds().width / 2,
 		view.getCenter().y + 360.f * zoom);
@@ -608,8 +665,6 @@ void Game::updateCombat()
 		{
 			if (this->villains[i]->getBounds().intersects(this->bullets[k]->getBounds()))
 			{
-
-				
 
 				this->villains[i]->setHp(this->villains[i]->getHp() - this->player->getDamage());
 
@@ -637,16 +692,24 @@ void Game::updateCombat()
 			if (this->bosses[i]->getBounds().intersects(this->bullets[k]->getBounds()))
 			{
 
-				this->bosses[i]->setHp(this->bosses[i]->getHp() - this->player->getDamage());
+				this->bosses[i]->loseHp(this->player->getDamage());
 
 				if (this->bosses[i]->getHp() <= 0)
 				{
 					this->points += this->bosses[i]->getPoints();
 
-					delete this->bosses[i];
-					this->bosses.erase(this->bosses.begin() + i);
+					if (this->bosses[i]->getType() == 2)
+					{
+						this->gameOver = true;
+					}
+					
+					else
+					{
+						delete this->bosses[i];
+						this->bosses.erase(this->bosses.begin() + i);
 
-					enemy_deleted = true;
+						enemy_deleted = true;
+					}
 				}
 				delete this->bullets[k];
 				this->bullets.erase(this->bullets.begin() + k);
@@ -658,6 +721,16 @@ void Game::updateCombat()
 	{
 		if (this->player->getBounds().intersects(this->enemyBullets[k]->getBounds()))
 		{
+			if (enemyBullets[k]->getType() == 1)
+			{
+				sound_4.play();
+			}
+
+			if (enemyBullets[k]->getType() == 2)
+			{
+				sound_5.play();
+			}
+
 			this->player->setHP(this->player->getHp() - 2);
 			delete this->enemyBullets[k];
 			this->enemyBullets.erase(this->enemyBullets.begin() + k);
@@ -693,7 +766,7 @@ void Game::updatePlayer()
 	this->player->update();
 }
 
-void Game::updateBullets()
+void Game::updateBullets() throw(out_of_range)
 {
 	unsigned counter = 0;
 
@@ -818,14 +891,14 @@ void Game::render()
 
 	this->renderWorld();
 
-	if (this->player->getHp() > 0)
+	if (this->player->getHp() > 0 && this->gameOver == false)
 	{
 		this->renderObjects();
 	}
 
 	this->renderGui();
 
-	if (this->player->getHp() <= 0)
+	if (this->player->getHp() <= 0 || this->gameOver == true)
 	{
 		this->window->draw(this->gameOverText);
 		this->window->draw(this->gameRetryText);

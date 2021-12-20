@@ -1,8 +1,13 @@
 #include "EnemyBullet.h"
 
-EnemyBullet::EnemyBullet(float posX, float posY, float dirX, float dirY)
+EnemyBullet::EnemyBullet(float posX, float posY, float dirX, float dirY, int type)
 {
-	this->texture.loadFromFile("Images/items/latte.png");
+	this->type = type;
+	if (this->type == 1)
+		this->texture.loadFromFile("Images/items/latte.png");
+	if (this->type == 2)
+		this->texture.loadFromFile("Images/items/pdf.png");
+
 	this->shape.setTexture(this->texture);
 	this->shape.scale(0.1f, 0.1f);
 
@@ -19,6 +24,11 @@ EnemyBullet::~EnemyBullet()
 const sf::FloatRect EnemyBullet::getBounds() const
 {
 	return this->shape.getGlobalBounds();
+}
+
+const int& EnemyBullet::getType() const
+{
+	return this->type;
 }
 
 void EnemyBullet::update()

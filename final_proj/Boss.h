@@ -32,6 +32,7 @@ public:
 	const int& getHpMax() const;
 	const int& getPoints() const;
 	const sf::Vector2f& getDir() const;
+	const int& getType() const;
 
 	void setHp(const int hp);
 	void loseHp(const int damage);

@@ -31,10 +31,10 @@ Boss::Boss(float posX, float posY, int type)
 		this->shape.setPosition(posX, posY);
 
 		this->hpMax = 50;
-		this->speed = 5;
+		this->speed = 3;
 		this->damage = 2;
 		this->point = 30;
-		this->attackCoolMax = 5.f;
+		this->attackCoolMax = 50.f;
 	}
 
 	this->dir.x = 0.f;
@@ -84,6 +84,11 @@ const int& Boss::getPoints() const
 const sf::Vector2f& Boss::getDir() const
 {
 	return this->dir;
+}
+
+const int& Boss::getType() const
+{
+	return this->type;
 }
 
 void Boss::setHp(const int hp)
@@ -155,14 +160,12 @@ void Boss::move()
 void Boss::update()
 {
 	updateAttack();
-	if (this->type == 1)
+
+	if (reachTrue == true)
 	{
-		if (reachTrue == true)
-		{
-			this->move();
-		}
+		this->move();
 	}
-	
+
 	float hpPercent = static_cast<float>(this->hp) / this->hpMax;
 
 	this->hpBar.setSize(sf::Vector2f(
