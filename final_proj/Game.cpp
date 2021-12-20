@@ -110,7 +110,7 @@ void Game::initPlayer()
 	this->player = new Player();
 	this->gameOver = false;
 	this->level = 1;
-	this->points = 1000;
+	this->points = 0;
 	this->player->setPosition(1000, 1000);
 }
 
